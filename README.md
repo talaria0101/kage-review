@@ -31,34 +31,40 @@ extensibility, config, docs, tests, distribution. GUI/TUI excluded.
 | Platforms | Linux, macOS, WSL | Linux, macOS, Windows | Linux, macOS, Windows | Linux, macOS, Windows |
 | Status | pre-1.0, single maintainer | community, auto-close triage | large community | vendor led (Moonshot AI) |
 
-## Standing per dimension (from kage's side)
+## Standing per dimension (kage vs the named rivals)
 
-| Dimension | kage standing | Note |
-| --- | --- | --- |
-| Construction quality | Better | Rust, unsafe forbidden, pedantic clippy clean, fmt clean, layered crates |
-| Extension isolation | Better | per-plugin Lua _ENV + capability jail, traversal/symlink confinement, watchdog |
-| Fetch hardening | Better | resolve-before-request SSRF checks on every DNS answer, redirect + timeout caps |
-| Session format | Better | append-only JSONL, cat/rg friendly, resume/clone/fork/search |
-| Config trust | Better | project config ignored until `kage trust`, edits re-ask, denies survive modes |
-| One engine, three frontends | Better | TUI, ACP rpc, and `-p` print share one dispatcher with sequenced events |
-| Providers | Good | 20 ids, models.dev snapshot + refresh, per-family thinking mapping |
-| MCP | Good | tools, resources, prompts, OAuth, sampling gate, serves own tools |
-| ACP | Good | agent and client both directions; subagent projection tracks a draft RFD |
-| Agents/subagents | Good | general + explore, parallel spawn, depth/width caps, 20k result cap |
-| Compaction | Good | 0.8 threshold, role-order safe summaries for ZAI/GLM + Anthropic |
-| Permissions model | Good | allow/ask/deny, deny-first globs, per-server MCP actions, session approvals |
-| CI hygiene | Good | fmt, clippy -D warnings, lua-types drift, ASCII rule, matrix tests |
-| Distribution | Bad | no binaries, no install script, no package managers |
-| Web search | Bad | fetch only, no search tool |
-| Code intelligence | Bad | no LSP/symbol/diagnostic tool |
-| Background + scheduled work | Bad | no background tasks, no cron |
-| Plan tracking | Bad | no todo, plan mode, or question tools |
-| Provider login UX | Bad | API keys only, no OAuth flow |
-| Windows | Bad | not supported |
-| Plugin discovery | Bad | no registry or marketplace |
-| Sandbox story | Worse | section removed, confinement opt-in and off by default |
-| Security defaults | Worse | default-allow builtins, coarse whole-token capability grants |
-| Maturity risk | Worse | pre-1.0, one maintainer, APIs may rename |
+Legend. Better = kage ahead of every rival named in that row. Good = kage
+level with the named rivals, plus where noted. Bad = kage behind at least
+one named rival. Worse = behind with structural weight, not a small gap.
+Where a cell says unverified, I did not confirm that rival's position, so no
+claim is made against them there.
+
+| Dimension | Verdict for kage | Against whom | Note |
+| --- | --- | --- | --- |
+| Construction quality | Better | ahead of pi, opencode, kimi-code | Rust, unsafe forbidden, pedantic clippy clean, fmt clean, layered crates |
+| Extension isolation | Better | ahead of pi, opencode, kimi-code | per-plugin Lua _ENV + capability jail, traversal/symlink confinement, watchdog; kimi shows install trust levels but no jail |
+| Fetch hardening | Better | ahead of pi, opencode, kimi-code on documented depth | resolve-before-request SSRF checks on every DNS answer, redirect + timeout caps |
+| Session format | Better | ahead of opencode, kimi-code; level with pi | append-only JSONL, cat/rg friendly, resume/clone/fork/search; opencode and kimi use sqlite-family stores, pi uses JSONL |
+| Config trust | Better | ahead of pi, opencode, kimi-code | project config ignored until `kage trust`, edits re-ask, denies survive modes; no equivalent flow found in the others |
+| One engine, three frontends | Good | level with opencode, pi; plus over kimi-code | TUI, ACP rpc, and `-p` print share one dispatcher with sequenced events; plus is ACP in both directions (agent + client) |
+| Providers | Good | level with pi, opencode, kimi-code | 20 ids vs pi 46 files (widest), opencode models.dev, kimi Moonshot-first; kage plus is ZAI region split + thinking mapping |
+| MCP | Good | level with pi, opencode, kimi-code | tools, resources, prompts, OAuth covered everywhere |
+| ACP | Good | level with opencode, kimi-code; ahead of pi | both directions in kage; pi surface is RPC commands, no ACP tree found |
+| Agents/subagents | Good | level with pi, opencode, kimi-code | general + explore, parallel spawn, depth/width caps, 20k result cap; same shape everywhere |
+| Compaction | Good | level with pi, opencode, kimi-code, slight plus | 0.8 threshold; plus is role-order safe summaries for ZAI/GLM + Anthropic |
+| Permissions model | Good | level with opencode, kimi-code; pi differs by design | allow/ask/deny, deny-first globs, per-server MCP actions, session approvals; pi has no builtin gate and uses containers instead |
+| CI hygiene | Good | level with pi, opencode, kimi-code on basics; ahead on two gates | fmt, clippy -D warnings, matrix tests everywhere; lua-types drift + ASCII gates are kage-only |
+| Distribution | Bad | behind pi, opencode, kimi-code | no binaries, no install script, no package managers; all three ship releases |
+| Web search | Bad | behind opencode, kimi-code; pi unverified | fetch only, no search tool; opencode ships websearch, kimi has webbridge/datasource |
+| Code intelligence | Bad | behind opencode; pi, kimi-code unverified | no LSP/symbol/diagnostic tool; opencode ships lsp.ts + service |
+| Background + scheduled work | Bad | behind opencode, kimi-code; pi unverified | no background tasks, no cron; opencode has background/, kimi has cron |
+| Plan tracking | Bad | behind opencode, kimi-code; pi unverified | no todo, plan mode, or question tools; both rivals ship them |
+| Provider login UX | Bad | behind pi, opencode, kimi-code | API keys only, no OAuth flow; each rival signs in via OAuth somewhere |
+| Windows | Bad | behind pi, opencode, kimi-code | not supported; all three install and run there |
+| Plugin discovery | Bad | behind kimi-code, opencode, pi | no registry or marketplace; kimi has a versioned index, others document discovery |
+| Sandbox story | Worse | behind pi, opencode, kimi-code | section removed, confinement opt-in and off by default; pi documents containers, opencode has containers/ |
+| Security defaults | Worse | behind opencode, kimi-code; pi differs by design | default-allow builtins, coarse whole-token grants vs ask-leaning rivals; pi pushes the boundary to containers |
+| Maturity risk | Worse | behind pi, opencode, kimi-code | pre-1.0, one maintainer, 0 stars/forks vs communities and a vendor |
 
 ## Builtin tools
 
